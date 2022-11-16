@@ -48,13 +48,7 @@ public class Date {
             return true;
         } else return year % 400 == 0;
     }
-    private boolean isLeapYear(int year) {
-        if (year % 4 != 0) {
-            return false;
-        } else if (year % 100 != 0) {
-            return true;
-        } else return year % 400 == 0;
-    }
+
    //Определить количество дней в месяце
     public int daysInMonth() {
         switch (month){
@@ -69,19 +63,7 @@ public class Date {
         }
         return month;
     }
-    private int daysInMonth(int month, int year) {
-        switch (month){
-            case 1,3,5,7,8,10,12: return 31;
-            case 2:
-                if (isLeapYear(year)) {
-                    return 29;
-                } else {
-                    return 28;
-                }
-            case 4,6,9,11: return 30;
-        }
-        return month;
-    }
+
    //Вычислить день недели по дате
     public String DayOfWeek() {
         int dayCount = 0;
@@ -136,6 +118,25 @@ public class Date {
         }
         return formatDate;
     }
+    private boolean isLeapYear(int year) {
+        if (year % 4 != 0) {
+            return false;
+        } else if (year % 100 != 0) {
+            return true;
+        } else return year % 400 == 0;
+    }
 
-
+    private int daysInMonth(int month, int year) {
+        switch (month){
+            case 1,3,5,7,8,10,12: return 31;
+            case 2:
+                if (isLeapYear(year)) {
+                    return 29;
+                } else {
+                    return 28;
+                }
+            case 4,6,9,11: return 30;
+        }
+        return month;
+    }
 }
