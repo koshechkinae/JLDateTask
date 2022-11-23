@@ -13,7 +13,7 @@ public class Main {
         Date parsedDate = new Date();
         boolean inputDateIncorrect = true;
         while (inputDateIncorrect) {
-            System.out.println("Введите дату в формате DD.MM.YYYY. Текущая дата: "+parsedDate.formatDate("DD.MM.YYYY"));
+            System.out.println("Введите дату в формате DD.MM.YYYY. Текущая дата: " + parsedDate.formatDate("DD.MM.YYYY"));
             inputDate = scan.nextLine();
             if (inputDate.length() == 10 && inputDate.indexOf('.') == 2 && inputDate.indexOf('.', 3) == 5) {
                 try {
@@ -49,7 +49,7 @@ public class Main {
         if (!mask.isEmpty()) {
             System.out.println(date.formatDate(mask));
         } else {
-            System.out.println("Маска не задана, выводится формат по умолчанию\n"+date.formatDate("YYYY-MM-DD"));
+            System.out.println("Маска не задана, выводится формат по умолчанию\n" + date.formatDate("YYYY-MM-DD"));
         }
     }
 }

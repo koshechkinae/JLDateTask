@@ -26,10 +26,10 @@ public class Date {
 
     public Date(int day, int month, int year) {
         if (month < 1 || month > 12) {
-            throw new IllegalArgumentException("Месяц введен некорректно (ожидается число с 1 по 12). Вы ввели: "+month);
+            throw new IllegalArgumentException("Месяц введен некорректно (ожидается число с 1 по 12). Вы ввели: " + month);
         }
         if (day < 1 || day > daysInMonth(month,year)) {
-            throw new IllegalArgumentException("День введен некорректно (ожидается значение с 1 по "+daysInMonth(month,year)+". Вы ввели: "+day);
+            throw new IllegalArgumentException("День введен некорректно (ожидается значение с 1 по " + daysInMonth(month,year) + ". Вы ввели: " + day);
         }
         this.year = year;
         this.month = month;
@@ -76,7 +76,7 @@ public class Date {
             case 4 -> "Четверг";
             case 5 -> "Пятница";
             case 6 -> "Суббота";
-            default -> throw new IllegalStateException("Название дня недели "+weekDay+" не определено");
+            default -> throw new IllegalStateException("Название дня недели " + weekDay + " не определено");
         };
     }
 
@@ -100,7 +100,7 @@ public class Date {
             case 1, 3, 5, 7, 8, 10, 12 -> 31;
             case 2 -> isLeapYear(year) ? 29 : 28;
             case 4, 6, 9, 11 -> 30;
-            default -> throw new IllegalStateException("Количество дней для месяца "+month+" не определено");
+            default -> throw new IllegalStateException("Количество дней для месяца " + month + " не определено");
         };
     }
 }
