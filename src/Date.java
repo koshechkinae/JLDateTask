@@ -4,8 +4,8 @@ public class Date {
     private final int year;
 
     public Date() {
-        int daysInMillis = (int) (System.currentTimeMillis()/1000/60/60/24);
-        int currentYear = 1970; //System.currentTimeMillis() начинает отсчет с 01.01.1970
+        long daysInMillis = System.currentTimeMillis()/1000/60/60/24;
+        int currentYear = 1970;
         while (daysInMillis >= 365) {
             if (isLeapYear(currentYear)) {
                 daysInMillis -= 366;
@@ -21,7 +21,7 @@ public class Date {
             currentMonth += 1;
         }
         month = currentMonth;
-        day = daysInMillis + 1;
+        day = (int) daysInMillis + 1;
     }
 
     public Date(int day, int month, int year) {
@@ -57,39 +57,34 @@ public class Date {
 
    //Вычислить день недели по дате
     public String DayOfWeek() {
-        int dayCount = 0;
-        int weekDay;
-        int i;
-        for (i = 1970; i < year; i++) {  //Определим количество дней в прошедших годах до года указанной даты
-            if (isLeapYear(i)) {
-                dayCount += 366;
-            } else {
-                dayCount += 365;
-            }
+        int day = this.day;
+        int month = this.month;
+        int year = this.year;
+        if (month > 2) {
+            month -= 2;
+        } else {
+            month += 10;
+            year--;
         }
-        for (i = 1; i < month; i++) {     //Добавим к полученному количеству сумму дней в прошедших месяцах до месяца указанной даты
-            dayCount += daysInMonth(i,year);
-        }
-        dayCount = dayCount + day - 1;      //Добавим количество прошедших дней месяца до указанной даты
-        weekDay = dayCount % 7;         //Остаток от деления не 7 дней даст номер дня недели
-
+        int weekDay = Math.floorMod(day + (13 * month - 1) / 5 + year + Math.floorDiv(year, 4)
+                + (Math.floorDiv(year, 400) - Math.floorDiv(year, 100)), 7);
         return switch (weekDay) {
-            case 0 -> "Четверг";
-            case 1 -> "Пятница";
-            case 2 -> "Суббота";
-            case 3 -> "Вокресенье";
-            case 4 -> "Понедельник";
-            case 5 -> "Вторник";
-            case 6 -> "Среда";
+            case 0 -> "Вокресенье";
+            case 1 -> "Понедельник";
+            case 2 -> "Вторник";
+            case 3 -> "Среда";
+            case 4 -> "Четверг";
+            case 5 -> "Пятница";
+            case 6 -> "Суббота";
             default -> throw new IllegalStateException("Название дня недели "+weekDay+" не определено");
         };
     }
 
-    public String formatDate (String mask) {
-        mask = mask.replace("YYYY",String.valueOf(year));
-        mask = month / 10 >= 1 ? mask.replace("MM",String.valueOf(month)) : mask.replace("MM","0"+month);
-        mask = day / 10 >= 1 ? mask.replace("DD",String.valueOf(day)) : mask.replace("DD","0"+day);
-        return mask;
+    public String formatDate(String mask) {
+        String year = String.valueOf(this.year);
+        String month = this.month / 10 >= 1 ? String.valueOf(this.month) : "0" + this.month;
+        String day = this.day / 10 >= 1 ? String.valueOf(this.day) : "0" + this.day;
+        return mask.replace("YYYY",year).replace("YY",year.substring(2,4)).replace("MM",month).replace("DD",day);
 
     }
     private boolean isLeapYear(int year) {

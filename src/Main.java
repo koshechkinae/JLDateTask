@@ -3,23 +3,23 @@ import java.util.Scanner;
 public class Main {
     public static void main(String[] args) {
         Scanner scan = new Scanner(System.in);
-        Date inputDate = getCorrectDate(scan);
-        printDateInfo(inputDate);
-        formatDateOutput(scan,inputDate);
+        Date date = getCorrectDate(scan);
+        printDateInfo(date);
+        formatDateOutput(scan,date);
         scan.close();
     }
     public static Date getCorrectDate(Scanner scan) {
-        String scannedLine;
+        String inputDate;
         Date parsedDate = new Date();
         boolean inputDateIncorrect = true;
         while (inputDateIncorrect) {
             System.out.println("Введите дату в формате DD.MM.YYYY. Текущая дата: "+parsedDate.formatDate("DD.MM.YYYY"));
-            scannedLine = scan.nextLine();
-            if (scannedLine.length() == 10 && scannedLine.indexOf('.') == 2 && scannedLine.indexOf('.', 3) == 5) {
+            inputDate = scan.nextLine();
+            if (inputDate.length() == 10 && inputDate.indexOf('.') == 2 && inputDate.indexOf('.', 3) == 5) {
                 try {
-                    int day = Integer.parseInt(scannedLine.substring(0, 2));
-                    int month = Integer.parseInt(scannedLine.substring(3, 5));
-                    int year = Integer.parseInt(scannedLine.substring(6, 10));
+                    int day = Integer.parseInt(inputDate.substring(0, 2));
+                    int month = Integer.parseInt(inputDate.substring(3, 5));
+                    int year = Integer.parseInt(inputDate.substring(6, 10));
                     parsedDate = new Date(day, month, year);
                     inputDateIncorrect = false;
                 } catch (IllegalArgumentException exception) {
@@ -43,11 +43,11 @@ public class Main {
     }
 
     public static void formatDateOutput(Scanner scan, Date date) {
-        String scannedLine;
+        String mask;
         System.out.println("Задайте формат вывода даты (YYYY - год, MM - месяц, DD - день):");
-        scannedLine = scan.nextLine();
-        if (!scannedLine.isEmpty()) {
-            System.out.println(date.formatDate(scannedLine));
+        mask = scan.nextLine();
+        if (!mask.isEmpty()) {
+            System.out.println(date.formatDate(mask));
         } else {
             System.out.println("Маска не задана, выводится формат по умолчанию\n"+date.formatDate("YYYY-MM-DD"));
         }
